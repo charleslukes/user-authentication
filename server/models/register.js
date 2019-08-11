@@ -27,7 +27,6 @@ const Schema = new mongoose.Schema({
   },
   confirm: {
     type: String,
-    required: true,
     minlength: 5,
     maxlength: 255
   },
@@ -37,7 +36,7 @@ const Schema = new mongoose.Schema({
   }
 })
 
-export const validation = (body) => {
+ exports.validation = (body) => {
   const schema = {
     name: Joi.string().min(3).max(255).required(),
     email: Joi.string().min(3).max(255).email().required(),
@@ -50,4 +49,5 @@ export const validation = (body) => {
   return Joi.validate(body, schema)
 }
 
-export const user = mongoose.model('User', Schema);
+exports.User = mongoose.model('User', Schema);
+
