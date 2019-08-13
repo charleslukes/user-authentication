@@ -1,21 +1,21 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var mongoose = require('mongoose');
-var session = require('express-session');
-var cors = require('cors');
-var passport = require('passport');
-var messages = require('express-messages')
-var flash = require('connect-flash');
-var dotenv = require('dotenv');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
+const session = require('express-session');
+const cors = require('cors');
+const passport = require('passport');
+const messages = require('express-messages')
+const flash = require('connect-flash');
+const dotenv = require('dotenv');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var privateRouter = require('./routes/members');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const privateRouter = require('./routes/members');
 
-var app = express();
+const app = express();
 
 mongoose.connect('mongodb://localhost/userauth-passport', { useNewUrlParser: true })
   .then(() => console.log('Connected to mongodb...'))
