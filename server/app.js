@@ -5,16 +5,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var session = require('express-session');
+var cors = require('cors');
 var passport = require('passport');
 var messages = require('express-messages')
-var LocalStrategy = require('passport-local').Strategy;
-var multer = require('multer');
-var upload = multer({dest: './uploads'});
 var flash = require('connect-flash');
-
+var dotenv = require('dotenv');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var privateRouter = require('./routes/members');
 
 var app = express();
 
@@ -26,10 +25,8 @@ mongoose.connect('mongodb://localhost/userauth-passport', { useNewUrlParser: tru
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-//Handle file upload
-// app.use(multer({dest: './uploads'}))
-
-
+dotenv.config();
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -60,6 +57,7 @@ app.use(function (req, res, next) {
 
 app.use('/', indexRouter);
 app.use('/', usersRouter);
+app.use('/', privateRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

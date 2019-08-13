@@ -3,7 +3,9 @@ const bcrypt = require('bcrypt');
 
 exports.register = async (req, res) => {
   const {error} = validation(req.body);
-  if (error) return res.status(404).send(error.details[0].message);
+  console.log(req.body)
+  console.log(req.flash(`registering...`))
+  if (error) return res.status(404).json(error.details[0].message);
 
   // check if email or username have been taken
   const checkMail = await User.findOne({email: req.body.email});
@@ -20,16 +22,16 @@ exports.register = async (req, res) => {
   const hashPassword = await bcrypt.hash(password, salt);
 
   const user = new User({
-    name: name,
-    email: email,
-    username: username,
+    name,
+    email,
+    username,
     password: hashPassword,
-    profilePic: profilePic
+    profilePic,
   })
 
   await user.save();
-  res.send(user);
+  res.json({username})
 
-  
+  console.log('user logged in')
 }
 
